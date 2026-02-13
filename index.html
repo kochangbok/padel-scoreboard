@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>빠델 스코어보드</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: white;
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .help-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .help-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            white-space: nowrap;
+        }
+        
+        .setup-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .setup-card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .mode-select, .option-select {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .option-btn {
+            padding: 20px;
+            background: #f5f5f5;
+            border: 3px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+        
+        .option-btn:hover {
+            background: #e8e8e8;
+        }
+        
+        .option-btn.selected {
+            background: #e8f0fe;
+            border-color: #667eea;
+        }
+        
+        .option-btn h3 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        .option-btn p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        .team-input {
+            margin-bottom: 20px;
+        }
+        
+        .team-input h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .team-input input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .team-input input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .number-input {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .number-input label {
+            flex: 1;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .number-input input {
+            width: 80px;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .scoreboard {
+            display: none;
+        }
+        
+        .score-header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .game-info {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        
+        .sets-display {
+            display: flex;
+            justify-content: space-around;
+            font-size: 1.1em;
+        }
+        
+        .set-score {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .team-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .team-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .players {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .score-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .current-score {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .games-score {
+            font-size: 1.5em;
+            color: #999;
+        }
+        
+        .score-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .team1 .score-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .control-btn {
+            flex: 1;
+            padding: 12px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .server-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: #ffd700;
+            border-radius: 50%;
+            margin-left: 10px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 100%;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h2 {
+            color: #667eea;
+            font-size: 1.5em;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 30px;
+            color: #999;
+            cursor: pointer;
+            line-height: 1;
+        }
+        
+        .modal-content h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .modal-content p, .modal-content ul {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .modal-content ul {
+            margin-left: 20px;
+        }
+        
+        .modal-content li {
+            margin-bottom: 8px;
+        }
+        
+        .winner-modal .modal-content {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎾 빠델 스코어보드</h1>
+            <div class="help-buttons">
+                <button class="help-btn" onclick="showScoring()">점수 체계</button>
+                <button class="help-btn" onclick="showRules()">경기 규칙</button>
+            </div>
+        </div>
+        
+        <!-- 1단계: 게임 모드 선택 -->
+        <div class="setup-card" id="modeSelect">
+            <h2>게임 모드 선택</h2>
+            <div class="mode-select">
+                <div class="option-btn" onclick="selectMode('official')">
+                    <h3>⚡ 정식 점수 체계</h3>
+                    <p>포인트 → 게임 → 세트 → 매치<br>
+                    테니스/빠델 공식 규칙 (0, 15, 30, 40, 듀스)</p>
+                </div>
+                <div class="option-btn" onclick="selectMode('simple')">
+                    <h3>🎯 간이 점수 체계</h3>
+                    <p>1점씩 올라가서 목표 점수 도달 시 세트 획득<br>
+                    빠른 게임에 적합</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 2단계: 정식 모드 옵션 -->
+        <div class="setup-card hidden" id="officialOptions">
+            <h2>정식 모드 설정</h2>
+            
+            <h3 style="color: #667eea; margin: 20px 0 10px 0;">듀스 규칙</h3>
+            <div class="option-select">
+                <div class="option-btn" onclick="selectAd(true)">
+                    <h3>✓ Ad (어드밴티지)</h3>
+                    <p>40-40 듀스에서 2점 연속 득점 필요</p>
+                </div>
+                <div class="option-btn" onclick="selectAd(false)">
+                    <h3>✗ No Ad</h3>
+                    <p>40-40에서 다음 점수가 게임 승리 (골든 포인트)</p>
+                </div>
+            </div>
+            
+            <h3 style="color: #667eea; margin: 20px 0 10px 0;">매치 구조</h3>
+            <div class="option-select">
+                <div class="option-btn" onclick="selectMatch(1)">
+                    <h3>1세트 매치</h3>
+                    <p>빠른 게임 (6게임 선취)</p>
+                </div>
+                <div class="option-btn" onclick="selectMatch(2)">
+                    <h3>3세트 중 2세트 승</h3>
+                    <p>일반 빠델 경기</p>
+                </div>
+                <div class="option-btn" onclick="selectMatch(3)">
+                    <h3>5세트 중 3세트 승</h3>
+                    <p>장시간 경기</p>
+                </div>
+                <div class="option-btn" onclick="selectMatch(4)">
+                    <h3>7세트 중 4세트 승</h3>
+                    <p>토너먼트용</p>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="showPlayerInput()">다음</button>
+            <button class="btn btn-secondary" onclick="backToMode()">이전</button>
+        </div>
+        
+        <!-- 2단계: 간이 모드 옵션 -->
+        <div class="setup-card hidden" id="simpleOptions">
+            <h2>간이 모드 설정</h2>
+            
+            <div class="number-input">
+                <label>세트 승리 점수:</label>
+                <input type="number" id="simpleTarget" value="11" min="5" max="50">
+            </div>
+            
+            <div class="number-input">
+                <label>총 세트 수:</label>
+                <input type="number" id="simpleSets" value="3" min="1" max="7">
+            </div>
+            
+            <p style="color: #666; font-size: 0.9em; margin-top: 10px;">
+                예: 11점 / 3세트 → 11점 먼저 득점 시 세트 획득, 3세트 중 2세트 승리
+            </p>
+            
+            <button class="btn" onclick="showPlayerInput()">다음</button>
+            <button class="btn btn-secondary" onclick="backToMode()">이전</button>
+        </div>
+        
+        <!-- 3단계: 플레이어 입력 -->
+        <div class="setup-card hidden" id="playerInput">
+            <h2>플레이어 입력</h2>
+            <div class="team-input">
+                <h3>팀 1</h3>
+                <input type="text" id="team1p1" placeholder="플레이어 1">
+                <input type="text" id="team1p2" placeholder="플레이어 2">
+            </div>
+            <div class="team-input">
+                <h3>팀 2</h3>
+                <input type="text" id="team2p1" placeholder="플레이어 1">
+                <input type="text" id="team2p2" placeholder="플레이어 2">
+            </div>
+            <button class="btn" onclick="startMatch()">경기 시작</button>
+            <button class="btn btn-secondary" onclick="backToOptions()">이전</button>
+        </div>
+        
+        <!-- 스코어보드 -->
+        <div class="scoreboard" id="scoreboard">
+            <div class="score-header">
+                <div class="game-info" id="gameInfo"></div>
+                <div class="sets-display">
+                    <div>팀 1 세트: <span class="set-score" id="team1Sets">0</span></div>
+                    <div>팀 2 세트: <span class="set-score" id="team2Sets">0</span></div>
+                </div>
+            </div>
+            
+            <div class="team-section team1">
+                <div class="team-name">팀 1<span class="server-indicator" id="server1" style="display:none;"></span></div>
+                <div class="players" id="team1Players"></div>
+                <div class="score-display">
+                    <div class="current-score" id="team1Score">0</div>
+                    <div class="games-score" id="team1GamesDisplay"></div>
+                </div>
+                <button class="score-btn" onclick="addPoint(1)">+1 득점</button>
+            </div>
+            
+            <div class="team-section team2">
+                <div class="team-name">팀 2<span class="server-indicator" id="server2" style="display:none;"></span></div>
+                <div class="players" id="team2Players"></div>
+                <div class="score-display">
+                    <div class="current-score" id="team2Score">0</div>
+                    <div class="games-score" id="team2GamesDisplay"></div>
+                </div>
+                <button class="score-btn" onclick="addPoint(2)">+1 득점</button>
+            </div>
+            
+            <div class="controls">
+                <button class="control-btn" onclick="undoPoint()">↶ 취소</button>
+                <button class="control-btn" onclick="resetMatch()">⟲ 새 경기</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 점수 체계 모달 -->
+    <div class="modal" id="scoringModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📊 점수 체계</h2>
+                <button class="close-btn" onclick="closeModal('scoringModal')">&times;</button>
+            </div>
+            
+            <h3>⚡ 정식 점수 체계</h3>
+            <p><strong>포인트 → 게임 → 세트 → 매치</strong></p>
+            
+            <h4 style="color: #333; margin-top: 15px;">포인트</h4>
+            <ul>
+                <li>0점 → "0" (러브)</li>
+                <li>1점 → "15"</li>
+                <li>2점 → "30"</li>
+                <li>3점 → "40"</li>
+                <li>4점 → 게임 승리 (상대 3점 이하)</li>
+            </ul>
+            
+            <h4 style="color: #333; margin-top: 15px;">듀스 (40-40)</h4>
+            <p><strong>Ad (어드밴티지):</strong> 2점 연속 득점 필요</p>
+            <p><strong>No Ad:</strong> 다음 점수가 곧바로 게임 승리 (골든 포인트)</p>
+            
+            <h4 style="color: #333; margin-top: 15px;">게임 → 세트</h4>
+            <ul>
+                <li>6게임 선취 (2게임 차이 이상)</li>
+                <li>예: 6-4, 7-5, 7-6</li>
+            </ul>
+            
+            <h4 style="color: #333; margin-top: 15px;">세트 → 매치</h4>
+            <ul>
+                <li>1세트 매치: 1세트만</li>
+                <li>3세트 중 2세트 승</li>
+                <li>5세트 중 3세트 승</li>
+                <li>7세트 중 4세트 승</li>
+            </ul>
+            
+            <h3 style="margin-top: 25px;">🎯 간이 점수 체계</h3>
+            <p>1점씩 올라가다가 목표 점수에 먼저 도달하면 세트 획득</p>
+            <ul>
+                <li>세트 승리 점수: 자유 설정 (예: 11점, 21점)</li>
+                <li>총 세트 수: 자유 설정 (예: 3세트)</li>
+                <li>과반수 세트 획득 시 매치 승리</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 경기 규칙 모달 -->
+    <div class="modal" id="rulesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📖 빠델 경기 규칙</h2>
+                <button class="close-btn" onclick="closeModal('rulesModal')">&times;</button>
+            </div>
+            
+            <h3>🎾 빠델이란?</h3>
+            <p>테니스와 스쿼시를 결합한 스포츠로, 스페인과 남미에서 인기있는 라켓 스포츠입니다.</p>
+            
+            <h3>👥 기본 규칙</h3>
+            <ul>
+                <li><strong>2 대 2 복식</strong>으로만 경기</li>
+                <li>코트를 둘러싼 <strong>유리벽</strong> 활용 가능</li>
+                <li>공이 벽에 튕긴 후에도 플레이 가능</li>
+                <li>서브는 <strong>언더핸드</strong>로만</li>
+            </ul>
+            
+            <h3>🔄 서브 규칙</h3>
+            <ul>
+                <li>매 게임마다 서버 교체</li>
+                <li>대각선으로 서브</li>
+                <li>서브는 바운드 후 허리 아래에서 타격</li>
+                <li>서브 실패 시 2번의 기회</li>
+            </ul>
+            
+            <h3>⚡ 플레이</h3>
+            <ul>
+                <li>공은 상대 코트에 <strong>바운드 1회</strong> 후 리턴</li>
+                <li>벽에 맞은 공도 유효 (본인 코트 내)</li>
+                <li>발리(노바운드) 가능</li>
+                <li>네트 터치 시 실점</li>
+            </ul>
+            
+            <h3>🏆 득점 방법</h3>
+            <ul>
+                <li>상대가 공을 리턴하지 못할 때</li>
+                <li>상대 공이 2번 바운드</li>
+                <li>상대 공이 네트에 걸릴 때</li>
+                <li>상대 공이 아웃될 때</li>
+            </ul>
+            
+            <h3>💡 이 앱 사용법</h3>
+            <ul>
+                <li>득점한 팀의 <strong>"+1 득점" 버튼</strong> 클릭</li>
+                <li>잘못 누른 경우 <strong>"↶ 취소"</strong> 버튼</li>
+                <li>서버는 <strong>황금색 점</strong>으로 표시</li>
+                <li>자동으로 게임/세트/매치 계산</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 승자 모달 -->
+    <div class="modal winner-modal" id="winnerModal">
+        <div class="modal-content">
+            <h2>🏆 경기 종료!</h2>
+            <p id="winnerText"></p>
+            <button class="btn" onclick="resetMatch()">새 경기 시작</button>
+        </div>
+    </div>
+    
+    <script>
+        let config = {
+            mode: null,
+            ad: true,
+            setsToWin: 2,
+            totalSets: 3,
+            simpleTarget: 11,
+        };
+        
+        let state = {
+            team1: { players: [], points: 0, games: 0, sets: 0 },
+            team2: { players: [], points: 0, games: 0, sets: 0 },
+            server: 1,
+            history: []
+        };
+        
+        const pointsMap = ['0', '15', '30', '40', 'AD'];
+        
+        function showScoring() {
+            document.getElementById('scoringModal').style.display = 'flex';
+        }
+        
+        function showRules() {
+            document.getElementById('rulesModal').style.display = 'flex';
+        }
+        
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+        
+        function selectMode(mode) {
+            config.mode = mode;
+            document.getElementById('modeSelect').classList.add('hidden');
+            if (mode === 'official') {
+                document.getElementById('officialOptions').classList.remove('hidden');
+            } else {
+                document.getElementById('simpleOptions').classList.remove('hidden');
+            }
+        }
+        
+        function selectAd(value) {
+            config.ad = value;
+            document.querySelectorAll('#officialOptions .option-select')[0].querySelectorAll('.option-btn').forEach((btn, i) => {
+                btn.classList.toggle('selected', (i === 0) === value);
+            });
+        }
+        
+        function selectMatch(option) {
+            const configs = [
+                { sets: 1, total: 1 },
+                { sets: 2, total: 3 },
+                { sets: 3, total: 5 },
+                { sets: 4, total: 7 }
+            ];
+            config.setsToWin = configs[option - 1].sets;
+            config.totalSets = configs[option - 1].total;
+            
+            document.querySelectorAll('#officialOptions .option-select')[1].querySelectorAll('.option-btn').forEach((btn, i) => {
+                btn.classList.toggle('selected', i === option - 1);
+            });
+        }
+        
+        function showPlayerInput() {
+            if (config.mode === 'official') {
+                if (config.setsToWin === undefined) {
+                    alert('듀스 규칙과 매치 구조를 선택해주세요.');
+                    return;
+                }
+                document.getElementById('officialOptions').classList.add('hidden');
+            } else {
+                config.simpleTarget = parseInt(document.getElementById('simpleTarget').value);
+                config.totalSets = parseInt(document.getElementById('simpleSets').value);
+                config.setsToWin = Math.ceil(config.totalSets / 2);
+                document.getElementById('simpleOptions').classList.add('hidden');
+            }
+            document.getElementById('playerInput').classList.remove('hidden');
+        }
+        
+        function backToMode() {
+            document.getElementById('officialOptions').classList.add('hidden');
+            document.getElementById('simpleOptions').classList.add('hidden');
+            document.getElementById('modeSelect').classList.remove('hidden');
+        }
+        
+        function backToOptions() {
+            document.getElementById('playerInput').classList.add('hidden');
+            if (config.mode === 'official') {
+                document.getElementById('officialOptions').classList.remove('hidden');
+            } else {
+                document.getElementById('simpleOptions').classList.remove('hidden');
+            }
+        }
+        
+        function startMatch() {
+            const t1p1 = document.getElementById('team1p1').value || '플레이어 1';
+            const t1p2 = document.getElementById('team1p2').value || '플레이어 2';
+            const t2p1 = document.getElementById('team2p1').value || '플레이어 3';
+            const t2p2 = document.getElementById('team2p2').value || '플레이어 4';
+            
+            state.team1.players = [t1p1, t1p2];
+            state.team2.players = [t2p1, t2p2];
+            
+            document.getElementById('team1Players').textContent = `${t1p1} / ${t1p2}`;
+            document.getElementById('team2Players').textContent = `${t2p1} / ${t2p2}`;
+            
+            let info = config.mode === 'official' 
+                ? `정식 | ${config.ad ? 'Ad' : 'No Ad'} | ${config.totalSets}세트 중 ${config.setsToWin}세트 승`
+                : `간이 | ${config.simpleTarget}점 | ${config.totalSets}세트 중 ${config.setsToWin}세트 승`;
+            document.getElementById('gameInfo').textContent = info;
+            
+            document.getElementById('playerInput').classList.add('hidden');
+            document.getElementById('scoreboard').style.display = 'block';
+            
+            updateDisplay();
+            updateServerIndicator();
+        }
+        
+        function addPoint(team) {
+            saveState();
+            
+            if (team === 1) {
+                state.team1.points++;
+            } else {
+                state.team2.points++;
+            }
+            
+            if (config.mode === 'official') {
+                checkGameWinOfficial();
+            } else {
+                checkSetWinSimple();
+            }
+            
+            updateDisplay();
+        }
+        
+        function checkGameWinOfficial() {
+            const p1 = state.team1.points;
+            const p2 = state.team2.points;
+            
+            if (config.ad) {
+                if (p1 >= 3 && p2 >= 3) {
+                    if (p1 === p2) {
+                        state.team1.points = 3;
+                        state.team2.points = 3;
+                    } else if (p1 > p2 + 1) {
+                        gameWin(1);
+                    } else if (p2 > p1 + 1) {
+                        gameWin(2);
+                    }
+                } else if (p1 >= 4) {
+                    gameWin(1);
+                } else if (p2 >= 4) {
+                    gameWin(2);
+                }
+            } else {
+                if (p1 >= 4 || (p1 === 3 && p2 === 3 && p1 > p2)) {
+                    gameWin(1);
+                } else if (p2 >= 4 || (p1 === 3 && p2 === 3 && p2 > p1)) {
+                    gameWin(2);
+                }
+            }
+        }
+        
+        function gameWin(team) {
+            if (team === 1) {
+                state.team1.games++;
+            } else {
+                state.team2.games++;
+            }
+            
+            state.team1.points = 0;
+            state.team2.points = 0;
+            
+            state.server = state.server === 1 ? 2 : 1;
+            updateServerIndicator();
+            
+            checkSetWin();
+        }
+        
+        function checkSetWin() {
+            const g1 = state.team1.games;
+            const g2 = state.team2.games;
+            
+            if (g1 >= 6 && g1 - g2 >= 2) {
+                setWin(1);
+            } else if (g2 >= 6 && g2 - g1 >= 2) {
+                setWin(2);
+            } else if (g1 >= 7) {
+                setWin(1);
+            } else if (g2 >= 7) {
+                setWin(2);
+            }
+        }
+        
+        function checkSetWinSimple() {
+            if (state.team1.points >= config.simpleTarget) {
+                state.team1.points = 0;
+                state.team2.points = 0;
+                setWin(1);
+            } else if (state.team2.points >= config.simpleTarget) {
+                state.team1.points = 0;
+                state.team2.points = 0;
+                setWin(2);
+            }
+        }
+        
+        function setWin(team) {
+            if (team === 1) {
+                state.team1.sets++;
+            } else {
+                state.team2.sets++;
+            }
+            
+            state.team1.games = 0;
+            state.team2.games = 0;
+            
+            checkMatchWin();
+        }
+        
+        function checkMatchWin() {
+            if (state.team1.sets >= config.setsToWin) {
+                showWinner(1);
+            } else if (state.team2.sets >= config.setsToWin) {
+                showWinner(2);
+            }
+        }
+        
+        function showWinner(team) {
+            const players = team === 1 ? state.team1.players : state.team2.players;
+            const score = `${state.team1.sets} - ${state.team2.sets}`;
+            
+            document.getElementById('winnerText').textContent = 
+                `${players[0]} / ${players[1]} 승리!\n최종 스코어: ${score}`;
+            document.getElementById('winnerModal').style.display = 'flex';
+        }
+        
+        function updateDisplay() {
+            const p1 = state.team1.points;
+            const p2 = state.team2.points;
+            
+            if (config.mode === 'official') {
+                if (p1 >= 3 && p2 >= 3 && config.ad) {
+                    if (p1 === p2) {
+                        document.getElementById('team1Score').textContent = '40';
+                        document.getElementById('team2Score').textContent = '40';
+                    } else if (p1 > p2) {
+                        document.getElementById('team1Score').textContent = 'AD';
+                        document.getElementById('team2Score').textContent = '40';
+                    } else {
+                        document.getElementById('team1Score').textContent = '40';
+                        document.getElementById('team2Score').textContent = 'AD';
+                    }
+                } else {
+                    document.getElementById('team1Score').textContent = pointsMap[p1] || '0';
+                    document.getElementById('team2Score').textContent = pointsMap[p2] || '0';
+                }
+                
+                document.getElementById('team1GamesDisplay').textContent = `게임: ${state.team1.games}`;
+                document.getElementById('team2GamesDisplay').textContent = `게임: ${state.team2.games}`;
+            } else {
+                document.getElementById('team1Score').textContent = p1;
+                document.getElementById('team2Score').textContent = p2;
+                document.getElementById('team1GamesDisplay').textContent = `목표: ${config.simpleTarget}점`;
+                document.getElementById('team2GamesDisplay').textContent = `목표: ${config.simpleTarget}점`;
+            }
+            
+            document.getElementById('team1Sets').textContent = state.team1.sets;
+            document.getElementById('team2Sets').textContent = state.team2.sets;
+        }
+        
+        function updateServerIndicator() {
+            document.getElementById('server1').style.display = state.server === 1 ? 'inline-block' : 'none';
+            document.getElementById('server2').style.display = state.server === 2 ? 'inline-block' : 'none';
+        }
+        
+        function saveState() {
+            state.history.push(JSON.parse(JSON.stringify(state)));
+        }
+        
+        function undoPoint() {
+            if (state.history.length > 0) {
+                state = state.history.pop();
+                updateDisplay();
+                updateServerIndicator();
+            }
+        }
+        
+        function resetMatch() {
+            config = {
+                mode: null,
+                ad: true,
+                setsToWin: 2,
+                totalSets: 3,
+                simpleTarget: 11,
+            };
+            
+            state = {
+                team1: { players: [], points: 0, games: 0, sets: 0 },
+                team2: { players: [], points: 0, games: 0, sets: 0 },
+                server: 1,
+                history: []
+            };
+            
+            document.getElementById('winnerModal').style.display = 'none';
+            document.getElementById('scoreboard').style.display = 'none';
+            document.getElementById('modeSelect').classList.remove('hidden');
+            
+            document.getElementById('team1p1').value = '';
+            document.getElementById('team1p2').value = '';
+            document.getElementById('team2p1').value = '';
+            document.getElementById('team2p2').value = '';
+        }
+    </script>
+</body>
+</html>
