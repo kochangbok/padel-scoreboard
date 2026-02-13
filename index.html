@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <!-- Primary Meta Tags -->
     <title>빠델 스코어보드 - Padel Scoreboard</title>
@@ -50,8 +50,16 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 20px;
+            padding: 15px;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
         }
         
         @keyframes gradientShift {
@@ -70,8 +78,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             animation: fadeInDown 0.6s ease-out;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+            }
         }
         
         @keyframes fadeInDown {
@@ -92,6 +110,13 @@
             animation: titleFloat 3s ease-in-out infinite;
         }
         
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.6em;
+                text-align: center;
+            }
+        }
+        
         @keyframes titleFloat {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-5px); }
@@ -101,6 +126,14 @@
             display: flex;
             gap: 8px;
             align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 480px) {
+            .header-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
         }
         
         .lang-selector {
@@ -108,13 +141,23 @@
             backdrop-filter: blur(10px);
             border: none;
             border-radius: 12px;
-            padding: 8px 12px;
-            font-size: 12px;
+            padding: 10px 14px;
+            font-size: 14px;
             font-weight: bold;
             cursor: pointer;
             color: #667eea;
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
+            min-height: 44px;
+        }
+        
+        @media (max-width: 480px) {
+            .lang-selector {
+                flex: 1;
+                min-width: 100px;
+                font-size: 15px;
+                padding: 12px 14px;
+            }
         }
         
         .lang-selector:hover {
@@ -128,8 +171,8 @@
             color: #667eea;
             border: none;
             border-radius: 12px;
-            padding: 8px 14px;
-            font-size: 12px;
+            padding: 10px 14px;
+            font-size: 14px;
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
@@ -137,6 +180,15 @@
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
+            min-height: 44px;
+        }
+        
+        @media (max-width: 480px) {
+            .help-btn {
+                flex: 1;
+                font-size: 13px;
+                padding: 12px 12px;
+            }
         }
         
         .help-btn::before {
@@ -171,6 +223,17 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             animation: fadeInUp 0.6s ease-out;
             border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        @media (max-width: 480px) {
+            .setup-card {
+                padding: 20px;
+                margin-bottom: 15px;
+            }
+            
+            .setup-card h2 {
+                font-size: 1.3em;
+            }
         }
         
         @keyframes fadeInUp {
@@ -218,6 +281,22 @@
             text-align: left;
             position: relative;
             overflow: hidden;
+            min-height: 80px;
+        }
+        
+        @media (max-width: 480px) {
+            .option-btn {
+                padding: 18px;
+                min-height: 90px;
+            }
+            
+            .option-btn h3 {
+                font-size: 1.05em;
+            }
+            
+            .option-btn p {
+                font-size: 0.88em;
+            }
         }
         
         .option-btn::before {
@@ -287,6 +366,15 @@
             font-size: 16px;
             transition: all 0.3s ease;
             background: rgba(255, 255, 255, 0.9);
+            min-height: 48px;
+        }
+        
+        @media (max-width: 480px) {
+            .team-input input {
+                padding: 14px;
+                font-size: 17px;
+                min-height: 52px;
+            }
         }
         
         .team-input input:focus {
@@ -339,6 +427,15 @@
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
+            min-height: 54px;
+        }
+        
+        @media (max-width: 480px) {
+            .btn {
+                padding: 18px;
+                font-size: 19px;
+                min-height: 58px;
+            }
         }
         
         .btn::before {
@@ -433,6 +530,16 @@
             transition: all 0.3s ease;
         }
         
+        @media (max-width: 480px) {
+            .team-section {
+                padding: 20px;
+            }
+            
+            .team-name {
+                font-size: 1.4em;
+            }
+        }
+        
         .team-section:hover {
             transform: translateY(-4px);
             box-shadow: 0 25px 70px rgba(0,0,0,0.35);
@@ -468,6 +575,12 @@
             animation: scoreGlow 2s ease-in-out infinite;
         }
         
+        @media (max-width: 480px) {
+            .current-score {
+                font-size: 4em;
+            }
+        }
+        
         @keyframes scoreGlow {
             0%, 100% { filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.5)); }
             50% { filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.8)); }
@@ -491,6 +604,15 @@
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
+            min-height: 60px;
+        }
+        
+        @media (max-width: 480px) {
+            .score-btn {
+                padding: 24px;
+                font-size: 20px;
+                min-height: 70px;
+            }
         }
         
         .score-btn::before {
@@ -542,6 +664,15 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
+            min-height: 48px;
+        }
+        
+        @media (max-width: 480px) {
+            .control-btn {
+                padding: 14px;
+                font-size: 15px;
+                min-height: 52px;
+            }
         }
         
         .control-btn:hover {
@@ -601,6 +732,22 @@
             animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 30px 80px rgba(0,0,0,0.4);
             border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        @media (max-width: 480px) {
+            .modal-content {
+                padding: 20px;
+                max-height: 85vh;
+                font-size: 15px;
+            }
+            
+            .modal-header h2 {
+                font-size: 1.3em;
+            }
+            
+            .modal-content h3 {
+                font-size: 1.1em;
+            }
         }
         
         @keyframes modalSlideIn {
