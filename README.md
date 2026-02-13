@@ -1,8 +1,15 @@
-# 🎾 빠델 스코어보드
+# 🎾 빠델 스코어보드 | Padel Scoreboard
 
-빠델/테니스 경기 점수 관리를 위한 웹 애플리케이션
+빠델/테니스 경기 점수 관리를 위한 웹 애플리케이션  
+Web application for tracking padel/tennis match scores
 
-## ✨ 주요 기능
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/kochangbok/padel-scoreboard)
+
+## ✨ 주요 기능 | Key Features
+
+### 🌍 다국어 지원 | Multilingual
+- 한국어 / English
+- 실시간 언어 전환
 
 ### 🎮 두 가지 게임 모드
 - **⚡ 정식 점수 체계**: 테니스/빠델 공식 규칙 (0, 15, 30, 40, 듀스)
@@ -47,10 +54,13 @@ start index.html # Windows
 xdg-open index.html # Linux
 ```
 
-## 🛠️ 기술 스택
+## 🛠️ 기술 스택 | Tech Stack
 - HTML5
-- CSS3 (Gradient, Animations)
+- CSS3 (Gradient, Animations, Glassmorphism)
 - Vanilla JavaScript (ES6+)
+- i18n (Internationalization)
+- SEO Optimized (Open Graph, Twitter Card)
+- PWA Ready
 
 ## 📄 라이선스
 MIT License
