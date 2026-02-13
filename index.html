@@ -120,41 +120,52 @@
             z-index: 0;
         }
 
-        .device-frame {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .arcade-wrapper {
+            position: relative;
             z-index: 1;
-            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 12px;
         }
 
-        .device-frame img {
-            width: min(720px, 92vw);
-            height: auto;
-            opacity: 0.9;
-            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.35));
+        .arcade-shell {
+            position: relative;
+            width: min(820px, 94vw);
+            aspect-ratio: 4 / 5.2;
+            background: url('/assets/padel-cabinet.png') center/contain no-repeat;
+            filter: drop-shadow(0 40px 80px rgba(0,0,0,0.35));
         }
 
-        .mascot {
-            position: fixed;
-            right: 4vw;
-            bottom: 6vh;
-            width: min(220px, 40vw);
-            z-index: 2;
-            opacity: 0.95;
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.25));
+        .arcade-screen {
+            position: absolute;
+            top: 18.5%;
+            left: 16%;
+            width: 68%;
+            height: 48%;
+            padding: 16px;
+            overflow: auto;
+            border-radius: 14px;
+            background: rgba(255, 248, 240, 0.94);
+            box-shadow: inset 0 0 0 2px rgba(111, 80, 47, 0.2);
+        }
+
+        .arcade-screen .container {
+            max-width: 100%;
+            margin: 0;
         }
 
         @media (max-width: 600px) {
-            .device-frame img {
-                width: 96vw;
+            .arcade-shell {
+                width: 98vw;
             }
-            .mascot {
-                width: 160px;
-                right: 2vw;
-                bottom: 3vh;
+            .arcade-screen {
+                top: 19%;
+                left: 14.5%;
+                width: 71%;
+                height: 49%;
+                padding: 12px;
             }
         }
 
@@ -367,17 +378,17 @@
         }
         
         .lang-selector {
-            background: #FFFFFF;
-            border: 1px solid rgba(91, 140, 255, 0.2);
-            border-radius: 14px;
-            padding: 10px 14px;
-            font-size: 14px;
-            font-weight: 600;
+            background: #F7D6B6;
+            border: 1px solid rgba(111, 80, 47, 0.25);
+            border-radius: 12px;
+            padding: 8px 12px;
+            font-size: 13px;
+            font-weight: 700;
             cursor: pointer;
-            color: #1D4ED8;
-            box-shadow: var(--shadow-md);
+            color: #3F2A1D;
+            box-shadow: 0 6px 12px rgba(111, 80, 47, 0.18);
             transition: all 0.3s ease;
-            min-height: 44px;
+            min-height: 38px;
             z-index: 3;
         }
         
@@ -396,20 +407,20 @@
         }
         
         .help-btn {
-            background: #FFFFFF;
-            color: #1D4ED8;
-            border: 1px solid rgba(91, 140, 255, 0.2);
-            border-radius: 14px;
-            padding: 10px 14px;
-            font-size: 14px;
-            font-weight: 600;
+            background: #F7D6B6;
+            color: #3F2A1D;
+            border: 1px solid rgba(111, 80, 47, 0.25);
+            border-radius: 12px;
+            padding: 8px 12px;
+            font-size: 13px;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 6px 12px rgba(111, 80, 47, 0.18);
             white-space: nowrap;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
-            min-height: 44px;
+            min-height: 38px;
             z-index: 3;
         }
         
@@ -445,15 +456,13 @@
         }
         
         .setup-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px) saturate(160%);
-            -webkit-backdrop-filter: blur(20px) saturate(160%);
-            border-radius: 26px;
-            padding: 32px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow-xl);
+            background: #FFF8F0;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 16px rgba(111, 80, 47, 0.12);
             animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid var(--glass-border);
+            border: 1px solid rgba(111, 80, 47, 0.15);
             position: relative;
             overflow: hidden;
             z-index: 2;
@@ -477,8 +486,8 @@
         .setup-card h2 {
             font-family: var(--font-display);
             font-weight: 700;
-            font-size: 1.75em;
-            color: #1F2937;
+            font-size: 1.25em;
+            color: #3F2A1D;
             letter-spacing: -0.02em;
         }
         
@@ -530,17 +539,17 @@
         }
         
         .option-btn {
-            padding: 22px;
-            background: #F3F6FF;
-            border: 1.5px solid rgba(91, 140, 255, 0.15);
-            border-radius: 20px;
+            padding: 16px;
+            background: #F8E9D6;
+            border: 1.5px solid rgba(111, 80, 47, 0.2);
+            border-radius: 14px;
             cursor: pointer;
-            transition: all 0.35s ease;
+            transition: all 0.25s ease;
             text-align: left;
             position: relative;
             overflow: hidden;
-            min-height: 90px;
-            box-shadow: var(--shadow-md);
+            min-height: 70px;
+            box-shadow: 0 6px 12px rgba(111, 80, 47, 0.12);
             z-index: 3;
         }
         
@@ -598,36 +607,36 @@
         }
         
         .option-btn.selected {
-            background: #E0ECFF;
-            border-color: rgba(91, 140, 255, 0.6);
+            background: #F7D6B6;
+            border-color: rgba(111, 80, 47, 0.5);
             border-width: 2px;
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(91, 140, 255, 0.25);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 18px rgba(111, 80, 47, 0.25);
         }
         
         .option-btn.selected h3 {
-            color: #1D4ED8;
+            color: #3F2A1D;
         }
         
         .option-btn.selected p {
-            color: #1E3A8A;
+            color: #4B3323;
         }
         
         .option-btn h3 {
             font-family: var(--font-display);
             font-weight: 600;
-            color: #1F2937;
-            margin-bottom: 10px;
-            font-size: 1.1em;
+            color: #3F2A1D;
+            margin-bottom: 6px;
+            font-size: 1em;
             position: relative;
             z-index: 1;
             letter-spacing: -0.01em;
         }
         
         .option-btn p {
-            color: #4B5563;
-            font-size: 0.9em;
-            line-height: 1.6;
+            color: #5F4634;
+            font-size: 0.82em;
+            line-height: 1.4;
             position: relative;
             z-index: 1;
             font-weight: 400;
@@ -706,19 +715,19 @@
         
         .btn {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            padding: 12px;
+            background: #8B2E2E;
+            color: #fff;
             border: none;
-            border-radius: 14px;
-            font-size: 18px;
-            font-weight: bold;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 12px;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
-            min-height: 54px;
+            min-height: 44px;
         }
         
         @media (max-width: 480px) {
@@ -757,9 +766,9 @@
         }
         
         .btn-secondary {
-            background: #FFFFFF;
-            color: #1D4ED8;
-            border: 1.5px solid rgba(91, 140, 255, 0.25);
+            background: #F7D6B6;
+            color: #3F2A1D;
+            border: 1px solid rgba(111, 80, 47, 0.25);
         }
         
         .hidden {
@@ -771,13 +780,13 @@
         }
         
         .score-header {
-            background: var(--glass-bg);
-            border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow-xl);
+            background: #FFF8F0;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 16px rgba(111, 80, 47, 0.12);
             animation: fadeInUp 0.6s ease-out;
-            border: 1px solid var(--glass-border);
+            border: 1px solid rgba(111, 80, 47, 0.15);
             z-index: 2;
         }
         
@@ -812,13 +821,13 @@
         }
         
         .team-section {
-            background: var(--glass-bg);
-            border-radius: 24px;
-            padding: 28px;
-            margin-bottom: 15px;
-            box-shadow: var(--shadow-xl);
+            background: #FFF8F0;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 10px;
+            box-shadow: 0 8px 16px rgba(111, 80, 47, 0.12);
             animation: fadeInUp 0.6s ease-out;
-            border: 1px solid var(--glass-border);
+            border: 1px solid rgba(111, 80, 47, 0.15);
             transition: all 0.3s ease;
             z-index: 2;
         }
@@ -885,18 +894,19 @@
         
         .score-btn {
             width: 100%;
-            padding: 20px;
-            background: linear-gradient(135deg, #5B8CFF 0%, #7CD992 100%);
-            color: white;
+            padding: 16px;
+            background: #2F7D59;
+            color: #fff;
             border: none;
-            border-radius: 16px;
-            font-size: 18px;
+            border-radius: 12px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
-            min-height: 60px;
+            min-height: 48px;
+            box-shadow: inset 0 -3px 0 rgba(0,0,0,0.15);
         }
         
         @media (max-width: 480px) {
@@ -931,11 +941,12 @@
         }
         
         .team1 .score-btn {
-            background: linear-gradient(135deg, #FFB4A2 0%, #FCD34D 100%);
+            background: #8B2E2E;
+            box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
         }
         
         .team1 .score-btn:hover {
-            box-shadow: 0 10px 30px rgba(255, 180, 162, 0.45);
+            box-shadow: 0 10px 20px rgba(139, 46, 46, 0.3);
         }
         
         .controls {
@@ -946,16 +957,16 @@
         
         .control-btn {
             flex: 1;
-            padding: 12px;
-            background: #FFFFFF;
-            color: #1D4ED8;
-            border: 1.5px solid rgba(91, 140, 255, 0.25);
-            border-radius: 14px;
-            font-size: 14px;
-            font-weight: 600;
+            padding: 10px;
+            background: #F7D6B6;
+            color: #3F2A1D;
+            border: 1px solid rgba(111, 80, 47, 0.25);
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
-            min-height: 48px;
+            min-height: 40px;
             z-index: 3;
         }
         
@@ -1152,12 +1163,10 @@
     </style>
 </head>
 <body>
-    <div class="device-frame">
-        <img src="/assets/padel-cabinet.png" alt="Padel device frame" />
-    </div>
-    <img class="mascot" src="/assets/padel-mascot.png" alt="Padel mascot" />
-
-    <div class="container">
+    <div class="arcade-wrapper">
+        <div class="arcade-shell">
+            <div class="arcade-screen">
+                <div class="container">
         <div class="header">
             <h1 data-i18n="title">🎾 빠델 스코어보드</h1>
             <div class="header-buttons">
@@ -1299,6 +1308,9 @@
             <div class="controls">
                 <button class="control-btn" onclick="undoPoint()">↶ <span data-i18n="btn-undo">취소</span></button>
                 <button class="control-btn" onclick="resetMatch()">⟲ <span data-i18n="btn-reset">새 경기</span></button>
+            </div>
+        </div>
+    </div>
             </div>
         </div>
     </div>
