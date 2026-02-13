@@ -35,6 +35,15 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
     <style>
         * {
             margin: 0;
@@ -1006,24 +1015,104 @@
         </div>
     </div>
     
-    <!-- Modals 생략 (동일) -->
+    <!-- 점수 체계 모달 -->
     <div class="modal" id="scoringModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>📊 <span data-i18n="btn-scoring">점수 체계</span></h2>
                 <button class="close-btn" onclick="closeModal('scoringModal')">&times;</button>
             </div>
-            <!-- 내용은 동일 -->
+            
+            <h3>⚡ 정식 점수 체계</h3>
+            <p><strong>포인트 → 게임 → 세트 → 매치</strong></p>
+            
+            <h4 style="color: #333; margin-top: 15px;">포인트</h4>
+            <ul>
+                <li>0점 → "0" (러브)</li>
+                <li>1점 → "15"</li>
+                <li>2점 → "30"</li>
+                <li>3점 → "40"</li>
+                <li>4점 → 게임 승리 (상대 3점 이하)</li>
+            </ul>
+            
+            <h4 style="color: #333; margin-top: 15px;">듀스 (40-40)</h4>
+            <p><strong>Ad (어드밴티지):</strong> 2점 연속 득점 필요</p>
+            <p><strong>No Ad:</strong> 다음 점수가 곧바로 게임 승리 (골든 포인트)</p>
+            
+            <h4 style="color: #333; margin-top: 15px;">게임 → 세트</h4>
+            <ul>
+                <li>6게임 선취 (2게임 차이 이상)</li>
+                <li>예: 6-4, 7-5, 7-6</li>
+            </ul>
+            
+            <h4 style="color: #333; margin-top: 15px;">세트 → 매치</h4>
+            <ul>
+                <li>1세트 매치: 1세트만</li>
+                <li>3세트 중 2세트 승</li>
+                <li>5세트 중 3세트 승</li>
+                <li>7세트 중 4세트 승</li>
+            </ul>
+            
+            <h3 style="margin-top: 25px;">🎯 간이 점수 체계</h3>
+            <p>1점씩 올라가다가 목표 점수에 먼저 도달하면 세트 획득</p>
+            <ul>
+                <li>세트 승리 점수: 자유 설정 (예: 11점, 21점)</li>
+                <li>총 세트 수: 자유 설정 (예: 3세트)</li>
+                <li>과반수 세트 획득 시 매치 승리</li>
+            </ul>
         </div>
     </div>
     
+    <!-- 경기 규칙 모달 -->
     <div class="modal" id="rulesModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>📖 <span data-i18n="btn-rules">경기 규칙</span></h2>
+                <h2>📖 <span data-i18n="btn-rules">빠델 경기 규칙</span></h2>
                 <button class="close-btn" onclick="closeModal('rulesModal')">&times;</button>
             </div>
-            <!-- 내용은 동일 -->
+            
+            <h3>🎾 빠델이란?</h3>
+            <p>테니스와 스쿼시를 결합한 스포츠로, 스페인과 남미에서 인기있는 라켓 스포츠입니다.</p>
+            
+            <h3>👥 기본 규칙</h3>
+            <ul>
+                <li><strong>2 대 2 복식</strong>으로만 경기</li>
+                <li>코트를 둘러싼 <strong>유리벽</strong> 활용 가능</li>
+                <li>공이 벽에 튕긴 후에도 플레이 가능</li>
+                <li>서브는 <strong>언더핸드</strong>로만</li>
+            </ul>
+            
+            <h3>🔄 서브 규칙</h3>
+            <ul>
+                <li>매 게임마다 서버 교체</li>
+                <li>대각선으로 서브</li>
+                <li>서브는 바운드 후 허리 아래에서 타격</li>
+                <li>서브 실패 시 2번의 기회</li>
+            </ul>
+            
+            <h3>⚡ 플레이</h3>
+            <ul>
+                <li>공은 상대 코트에 <strong>바운드 1회</strong> 후 리턴</li>
+                <li>벽에 맞은 공도 유효 (본인 코트 내)</li>
+                <li>발리(노바운드) 가능</li>
+                <li>네트 터치 시 실점</li>
+            </ul>
+            
+            <h3>🏆 득점 방법</h3>
+            <ul>
+                <li>상대가 공을 리턴하지 못할 때</li>
+                <li>상대 공이 2번 바운드</li>
+                <li>상대 공이 네트에 걸릴 때</li>
+                <li>상대 공이 아웃될 때</li>
+            </ul>
+            
+            <h3>💡 이 앱 사용법</h3>
+            <ul>
+                <li>득점한 팀의 <strong>"+1 득점" 버튼</strong> 클릭</li>
+                <li>잘못 누른 경우 <strong>"↶ 취소"</strong> 버튼</li>
+                <li>서버는 <strong>황금색 점</strong>으로 표시</li>
+                <li>자동으로 게임/세트/매치 계산</li>
+            </ul>
         </div>
     </div>
     
