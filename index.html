@@ -1855,22 +1855,30 @@
             }
         }
 
-        // GSAP entrance animations
+        // GSAP entrance animations (fix visibility after animation)
         if (window.gsap) {
-            gsap.from('.setup-card', {
-                y: 40,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: 'power3.out'
-            });
-            gsap.from('.team-section', {
-                y: 30,
-                opacity: 0,
-                duration: 0.7,
-                stagger: 0.1,
-                ease: 'power3.out'
-            });
+            gsap.fromTo('.setup-card',
+                { y: 40, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: 'power3.out',
+                    clearProps: 'transform,opacity'
+                }
+            );
+            gsap.fromTo('.team-section',
+                { y: 30, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.7,
+                    stagger: 0.1,
+                    ease: 'power3.out',
+                    clearProps: 'transform,opacity'
+                }
+            );
         }
 
         // Particle background
