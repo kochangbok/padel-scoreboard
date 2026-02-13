@@ -90,7 +90,7 @@
         body {
             font-family: var(--font-body);
             font-weight: 400;
-            background: #F7F9FF;
+            background: url('/assets/padel-bg.png') center/cover no-repeat fixed;
             position: relative;
             min-height: 100vh;
             display: flex;
@@ -100,16 +100,6 @@
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
             color: #111827;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: url('/assets/padel-bg.png') center/cover no-repeat;
-            z-index: 0;
-            filter: blur(1px) saturate(1.05);
-            transform: scale(1.02);
         }
 
         body::after {
